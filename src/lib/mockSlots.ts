@@ -6,6 +6,8 @@ import {
   setMinutes,
 } from "date-fns"
 
+import { formatTime24to12 } from "./formatTime"
+
 export type SlotStatus = "available" | "booked" | "unavailable"
 
 export interface TimeSlot {
@@ -47,6 +49,15 @@ function getSlotStatus(date: Date, time: string): SlotStatus {
   if (random < 25) return "booked"
   if (random < 90) return "available"
   return "unavailable"
+}
+
+/** Generate time slots for a single day in 12h format (e.g. "9:30 am") */
+export function generateTimeSlotsForDay(date: Date): { time: string; time24: string; status: SlotStatus }[] {
+  return SLOT_TIMES.map((time24) => ({
+    time: formatTime24to12(time24),
+    time24,
+    status: getSlotStatus(date, time24),
+  }))
 }
 
 export function generateMockSlots(weekStart: Date): DaySlots[] {

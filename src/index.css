@@ -4,6 +4,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * Basetica & Tiempos: To use the exact brand fonts, add WOFF2 files to /public/fonts/
+ * and uncomment the @font-face rules below. Fallbacks: DM Sans (sans), Source Serif 4 (serif).
+ */
+
 @theme inline {
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
@@ -46,6 +51,21 @@
 }
 
 :root {
+    /* Typography: Basetica (sans), Tiempos Text (serif). Add @font-face in index.css for self-hosted files. */
+    --font-basetica: "Basetica", "DM Sans", system-ui, sans-serif;
+    --font-tiempos: "Tiempos Text", "Source Serif 4", Georgia, serif;
+
+    /* Juno Veterinary brand tokens */
+    --juno-primary: #205036;
+    --juno-primary-subdued: #3d705f;
+    --juno-accent: #ff7f4d;
+    --juno-surface-tertiary: #fbe8d1;
+    --juno-surface-contrast: #ffbe83;
+    --juno-border: #b5c5bc;
+    --juno-text-header: #06100b;
+    --juno-text-subtext: #616161;
+    --juno-neutral-20: #f9f9f9;
+    --juno-neutral-40: #e0e0e0;
     --radius: 0.625rem;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
@@ -115,10 +135,21 @@
 }
 
 @layer base {
+  html,
+  body {
+    min-height: 100vh;
+  }
+  #root {
+    min-height: 100vh;
+  }
+  /* Avoid universal border on * - was causing glitchy visuals. Scoped to form controls only. */
   * {
-    @apply border-border outline-ring/50;
-    }
+    @apply outline-ring/50;
+  }
+  input, select, textarea {
+    @apply border-border;
+  }
   body {
     @apply bg-background text-foreground;
-    }
+  }
 }

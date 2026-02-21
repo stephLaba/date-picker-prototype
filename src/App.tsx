@@ -1,16 +1,7 @@
-import { WeekView } from "@/components/WeekView"
+import { VersionedBookingView } from "@/components/booking/VersionedBookingView"
 
 function App() {
-  return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b px-4 py-6">
-        <h1 className="text-xl font-semibold">Vet Clinic — Book an Appointment</h1>
-      </header>
-      <main className="py-6">
-        <WeekView />
-      </main>
-    </div>
-  )
+  return <VersionedBookingView />
 }
 
 export default App

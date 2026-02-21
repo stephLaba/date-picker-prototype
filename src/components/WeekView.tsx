@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { addWeeks, format, startOfWeek, subWeeks } from "date-fns"
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import { CaretLeft, CaretRight } from "@phosphor-icons/react"
 
 import { AppointmentSlot } from "@/components/AppointmentSlot"
 import { DatePickerTrigger } from "@/components/DatePickerTrigger"
@@ -46,7 +46,7 @@ export function WeekView() {
               className="inline-flex size-9 items-center justify-center rounded-md border bg-background hover:bg-accent"
               aria-label="Previous week"
             >
-              <ChevronLeftIcon className="size-4" />
+              <CaretLeft className="size-4" weight="bold" />
             </button>
             <DatePickerTrigger
               weekStart={weekStart}
@@ -58,12 +58,17 @@ export function WeekView() {
               className="inline-flex size-9 items-center justify-center rounded-md border bg-background hover:bg-accent"
               aria-label="Next week"
             >
-              <ChevronRightIcon className="size-4" />
+              <CaretRight className="size-4" weight="bold" />
             </button>
           </div>
           <p className="text-sm text-muted-foreground">
             {selectedSlot
-              ? `Selected: ${format(new Date(selectedSlot.date), "EEEE, MMM d")} at ${selectedSlot.time}`
+              ? (() => {
+                  const [y, m, d] = selectedSlot.date
+                    .split("-")
+                    .map((n) => Number.parseInt(n, 10))
+                  return `Selected: ${format(new Date(y, m - 1, d), "EEEE, MMM d")} at ${selectedSlot.time}`
+                })()
               : "Select an appointment slot"}
           </p>
         </CardHeader>

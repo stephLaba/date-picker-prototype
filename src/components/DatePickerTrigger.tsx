@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { format } from "date-fns"
-import { ChevronDownIcon } from "lucide-react"
+import { CaretDown } from "@phosphor-icons/react"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -48,7 +48,7 @@ export function DatePickerTrigger({
           )}
         >
           {format(weekStart, "MMM d")} – {format(weekEnd, "MMM d, yyyy")}
-          <ChevronDownIcon className="ml-2 size-4 opacity-50" />
+          <CaretDown className="ml-2 size-4 opacity-50" weight="bold" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
