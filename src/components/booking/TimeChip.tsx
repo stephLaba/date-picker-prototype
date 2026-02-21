@@ -15,9 +15,9 @@ export function TimeChip({ time, selected, onClick, disabled }: TimeChipProps) {
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "inline-flex h-[41px] min-h-[41px] cursor-pointer items-center gap-2 overflow-hidden rounded-[24px] px-6 py-2 transition-colors lg:h-8 lg:min-h-[32px] lg:px-4 lg:py-1.5",
+        "inline-flex h-[41px] min-h-[41px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-[24px] border-2 border-transparent px-6 py-2 transition-colors lg:justify-start lg:h-8 lg:min-h-[32px] lg:px-4 lg:py-1.5",
         selected
-          ? "bg-[var(--juno-surface-contrast)] pl-4 pr-1 text-[var(--juno-primary)]"
+          ? "bg-[var(--juno-surface-tertiary)] border-dashed border-[var(--juno-selection-border)] text-[var(--juno-primary)] lg:border-transparent lg:bg-[var(--juno-surface-contrast)] lg:pl-4 lg:pr-1"
           : "bg-[var(--juno-surface-tertiary)] text-[var(--juno-primary)] hover:bg-[var(--juno-surface-contrast)]/80",
         disabled && "cursor-not-allowed opacity-60"
       )}

@@ -9,17 +9,5 @@
       "selectedDateIso": "2026-02-22T17:31:25.264Z",
       "selectedTime": null
     }
-  },
-  {
-    "id": "v5-1771698394793",
-    "versionNumber": 5,
-    "title": "Added clinic location picker",
-    "note": "Using the MCP, connected to the clinic picker component",
-    "savedAt": "2026-02-21T18:26:34.793Z",
-    "state": {
-      "weekStartIso": "2026-02-15T05:00:00.000Z",
-      "selectedDateIso": "2026-02-17T05:00:00.000Z",
-      "selectedTime": null
-    }
   }
 ]
