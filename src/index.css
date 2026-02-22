@@ -141,12 +141,19 @@
   html {
     scrollbar-gutter: stable;
   }
+  html {
+    height: 100%;
+  }
   html,
   body {
     min-height: 100vh;
   }
+  body {
+    height: 100%;
+  }
   #root {
     min-height: 100vh;
+    height: 100%;
   }
   /* Avoid universal border on * - was causing glitchy visuals. Scoped to form controls only. */
   * {

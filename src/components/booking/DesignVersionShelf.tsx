@@ -177,7 +177,7 @@ export function DesignVersionShelf({ getCurrentState, onRevert }: DesignVersionS
               <button
                 type="button"
                 onClick={handleConfirmRemove}
-                className="rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-700"
+                className="rounded-md border border-transparent bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-700"
               >
                 Remove
               </button>
@@ -215,7 +215,7 @@ export function DesignVersionShelf({ getCurrentState, onRevert }: DesignVersionS
           <button
             type="button"
             onClick={handleClose}
-            className="rounded p-1.5 text-[var(--juno-text-subtext)] hover:bg-[var(--juno-neutral-20)]"
+            className="rounded border border-transparent p-1.5 text-[var(--juno-text-subtext)] hover:bg-[var(--juno-neutral-20)]"
             aria-label="Close"
           >
             <X className="size-5" weight="bold" />
@@ -250,7 +250,7 @@ export function DesignVersionShelf({ getCurrentState, onRevert }: DesignVersionS
                 <button
                   type="button"
                   onClick={handleSaveSubmit}
-                  className="rounded-md bg-[var(--juno-primary)] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#1a4030]"
+                  className="rounded-md border border-transparent bg-[var(--juno-primary)] px-3 py-1.5 text-sm font-medium text-white hover:bg-[#1a4030]"
                 >
                   Save version
                 </button>
@@ -270,7 +270,7 @@ export function DesignVersionShelf({ getCurrentState, onRevert }: DesignVersionS
             <button
               type="button"
               onClick={handleSaveClick}
-              className="mb-4 w-full rounded-md border border-dashed border-[var(--juno-border)] px-3 py-2.5 text-sm font-medium text-[var(--juno-primary)] hover:border-[var(--juno-primary)] hover:bg-[var(--juno-surface-tertiary)]"
+              className="mb-4 w-full rounded-md border border-dashed border-[var(--juno-border)] px-3 py-2.5 text-sm font-medium text-[var(--juno-primary)] hover:bg-[var(--juno-surface-tertiary)]"
             >
               Save new version
             </button>
@@ -351,7 +351,7 @@ export function DesignVersionShelf({ getCurrentState, onRevert }: DesignVersionS
                           <button
                             type="button"
                             onClick={() => handleStartEdit(v)}
-                            className="rounded p-1 text-[var(--juno-text-subtext)] hover:bg-[var(--juno-neutral-20)] hover:text-[var(--juno-primary)]"
+                            className="rounded border border-transparent p-1 text-[var(--juno-text-subtext)] hover:bg-[var(--juno-neutral-20)] hover:text-[var(--juno-primary)]"
                             aria-label="Edit title and notes"
                           >
                             <Pencil className="size-3.5" weight="bold" />
@@ -359,7 +359,7 @@ export function DesignVersionShelf({ getCurrentState, onRevert }: DesignVersionS
                           <button
                             type="button"
                             onClick={(e) => handleRemoveClick(v, e)}
-                            className="rounded p-1 text-[var(--juno-text-subtext)] hover:bg-red-50 hover:text-red-600"
+                            className="rounded border border-transparent p-1 text-[var(--juno-text-subtext)] hover:bg-red-50 hover:text-red-600"
                             aria-label="Remove version"
                           >
                             <Trash className="size-3.5" weight="bold" />
