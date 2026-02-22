@@ -64,10 +64,16 @@ export function LocationDropdown({
   size = "desktop",
 }: LocationDropdownProps) {
   const [open, setOpen] = React.useState(false)
-  const selectedLocation = value
-    ? LOCATIONS.find((l) => l.id === value) ?? LOCATIONS[4]
-    : LOCATIONS[4] // Default Summerhill
+  const [internalValue, setInternalValue] = React.useState<string>(LOCATIONS[4].id)
+  const selectedId = value ?? internalValue
+  const selectedLocation = LOCATIONS.find((l) => l.id === selectedId) ?? LOCATIONS[4]
   const imgSize = size === "mobile" ? 40 : 56
+
+  const handleSelect = (id: string) => {
+    setInternalValue(id)
+    onValueChange?.(id)
+    setOpen(false)
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -80,7 +86,7 @@ export function LocationDropdown({
               ? "h-[76px] px-4 py-3"
               : "w-[456px] max-w-full px-6 py-4",
             open
-              ? "border-2 border-[var(--juno-primary)] rounded-b-none"
+              ? "border-2 border-[var(--juno-primary)]"
               : "border border-[var(--juno-border)] hover:border-[var(--juno-primary-subdued)]",
             className
           )}
@@ -111,23 +117,20 @@ export function LocationDropdown({
         </button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[var(--radix-popover-trigger-width)] rounded-t-none border-t-0 p-0 shadow-[0px_4px_2px_0px_rgba(16,24,40,0.06),0px_4px_8px_0px_rgba(16,24,41,0.1)]"
+        className="w-[var(--radix-popover-trigger-width)] overflow-hidden rounded-[14px] border border-[var(--juno-border)] p-0 shadow-[0px_4px_2px_0px_rgba(16,24,40,0.06),0px_4px_8px_0px_rgba(16,24,41,0.1)] duration-200"
         align="start"
-        sideOffset={0}
+        sideOffset={4}
       >
         <div className="max-h-[280px] overflow-y-auto">
           {LOCATIONS.map((loc) => {
-            const isSelected = loc.id === (value ?? selectedLocation.id)
+            const isSelected = loc.id === selectedId
             return (
               <button
                 key={loc.id}
                 type="button"
-                onClick={() => {
-                  onValueChange?.(loc.id)
-                  setOpen(false)
-                }}
+                onClick={() => handleSelect(loc.id)}
                 className={cn(
-                  "flex w-full items-start gap-3 border-b border-[var(--juno-neutral-40)] px-6 py-4 text-left last:border-b-0 transition-colors hover:bg-[var(--juno-neutral-20)]",
+                  "flex w-full items-start gap-3 border-b border-[var(--juno-neutral-40)] px-6 py-4 text-left last:border-b-0 last:rounded-b-[14px] transition-colors hover:bg-[var(--juno-neutral-20)]",
                   size === "mobile" && "px-4 py-3",
                   isSelected && "bg-white"
                 )}

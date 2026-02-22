@@ -64,6 +64,9 @@
     --juno-border: #b5c5bc;
     --juno-text-header: #06100b;
     --juno-text-subtext: #616161;
+    --juno-text-disabled: #757575;
+    --juno-surface-disabled: #eee;
+    --juno-selection-border: #8B5CF6;
     --juno-neutral-20: #f9f9f9;
     --juno-neutral-40: #e0e0e0;
     --radius: 0.625rem;
@@ -135,6 +138,9 @@
 }
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
   html,
   body {
     min-height: 100vh;
@@ -152,4 +158,36 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Loading / entrance animations */
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide-up {
+  opacity: 0;
+  animation: fade-slide-up 0.45s ease-out forwards;
+}
+
+.animate-fade-slide-up-delay-1 { opacity: 0; animation: fade-slide-up 0.45s 80ms ease-out forwards; }
+.animate-fade-slide-up-delay-2 { opacity: 0; animation: fade-slide-up 0.45s 160ms ease-out forwards; }
+.animate-fade-slide-up-delay-3 { opacity: 0; animation: fade-slide-up 0.45s 240ms ease-out forwards; }
+.animate-fade-slide-up-delay-4 { opacity: 0; animation: fade-slide-up 0.45s 320ms ease-out forwards; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fade-in 0.35s ease-out forwards;
 }

@@ -5,7 +5,12 @@ import { ArrowLeft, CaretLeft, CaretRight } from "@phosphor-icons/react"
 import { DateTile } from "@/components/booking/DateTile"
 import { LocationDropdown } from "@/components/booking/LocationDropdown"
 import { TimeChip } from "@/components/booking/TimeChip"
-import { generateTimeSlotsForDay } from "@/lib/mockSlots"
+import {
+  generateTimeSlotsForDay,
+  getFirstAvailableDate,
+  getNextAvailableDate,
+  hasAvailableSlots,
+} from "@/lib/mockSlots"
 import { cn } from "@/lib/utils"
 
 const STEPS = [
@@ -19,15 +24,11 @@ const STEPS = [
 const CURRENT_STEP_INDEX = 2
 
 export function BookingView() {
-  const [weekStart, setWeekStart] = React.useState(() => {
-    const today = new Date()
-    return startOfWeek(today, { weekStartsOn: 0 })
-  })
-  const [selectedDate, setSelectedDate] = React.useState<Date>(() => {
-    const d = new Date()
-    d.setDate(d.getDate() + 1)
-    return d
-  })
+  const firstAvailable = React.useMemo(() => getFirstAvailableDate(), [])
+  const [weekStart, setWeekStart] = React.useState(() =>
+    startOfWeek(firstAvailable, { weekStartsOn: 0 }),
+  )
+  const [selectedDate, setSelectedDate] = React.useState<Date>(() => firstAvailable)
   const [selectedTime, setSelectedTime] = React.useState<string | null>(null)
 
   const weekDates = React.useMemo(() => {
@@ -47,6 +48,15 @@ export function BookingView() {
 
   const handlePrevWeek = () => setWeekStart((d) => subWeeks(d, 1))
   const handleNextWeek = () => setWeekStart((d) => addWeeks(d, 1))
+
+  const handleJumpToNextAvailable = () => {
+    const next = getNextAvailableDate(selectedDate)
+    if (next) {
+      setWeekStart(startOfWeek(next, { weekStartsOn: 0 }))
+      setSelectedDate(next)
+      setSelectedTime(null)
+    }
+  }
 
   const weekEnd = new Date(weekStart)
   weekEnd.setDate(weekEnd.getDate() + 6)
@@ -139,6 +149,7 @@ export function BookingView() {
                   selected={
                     selectedDate.toDateString() === date.toDateString()
                   }
+                  available={hasAvailableSlots(date)}
                   onClick={() => setSelectedDate(date)}
                 />
               ))}
@@ -150,20 +161,50 @@ export function BookingView() {
             <h2 className="text-left text-base font-medium text-[var(--juno-primary)]">
               {format(selectedDate, "MMMM d, yyyy")}
             </h2>
-            <div className="flex w-full flex-wrap justify-start gap-[11px]">
-              {timeSlots.map((slot) => (
-                <TimeChip
-                  key={slot.time24}
-                  time={slot.time}
-                  selected={selectedTime === slot.time24}
-                  disabled={slot.status !== "available"}
-                  onClick={() =>
-                    slot.status === "available" &&
-                    setSelectedTime((t) => (t === slot.time24 ? null : slot.time24))
-                  }
-                />
-              ))}
-            </div>
+            {(() => {
+              const availableSlots = timeSlots.filter(
+                (slot) => slot.status === "available",
+              )
+              if (availableSlots.length === 0) {
+                const nextAvailable = getNextAvailableDate(selectedDate)
+                return (
+                  <div className="flex w-full flex-col items-center justify-center gap-4 rounded-[14px] border border-[var(--juno-border)] bg-[var(--juno-neutral-20)] px-6 py-10">
+                    <p className="text-center text-base font-medium text-[var(--juno-text-subtext)]">
+                      No availability
+                    </p>
+                    <p className="text-center text-sm text-[var(--juno-text-subtext)]">
+                      There are no appointments available on this date. Please
+                      select another day.
+                    </p>
+                    {nextAvailable && (
+                      <button
+                        type="button"
+                        onClick={handleJumpToNextAvailable}
+                        className="rounded-full border-2 border-[var(--juno-primary)] bg-[var(--juno-primary)] px-6 py-2.5 text-sm font-bold tracking-[0.7px] text-white transition-colors hover:bg-[#1a4030]"
+                      >
+                        Jump to next available
+                      </button>
+                    )}
+                  </div>
+                )
+              }
+              return (
+                <div className="flex w-full flex-wrap justify-start gap-[11px]">
+                  {availableSlots.map((slot) => (
+                    <TimeChip
+                      key={slot.time24}
+                      time={slot.time}
+                      selected={selectedTime === slot.time24}
+                      onClick={() =>
+                        setSelectedTime((t) =>
+                          t === slot.time24 ? null : slot.time24,
+                        )
+                      }
+                    />
+                  ))}
+                </div>
+              )
+            })()}
           </div>
         </div>
 
